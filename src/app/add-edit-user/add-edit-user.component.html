@@ -1,0 +1,93 @@
+<app-error-loading *ngIf="errorObject">
+  <div class="error"> {{errorObject}}</div>
+</app-error-loading>
+
+<form (ngSubmit)="saveUser()" [formGroup]="userForm" class="user-form">
+  <h1>{{ title }}</h1>
+  <br />
+
+  <label for="firstName">First name*: </label>
+  <input id="firstName" type="text" formControlName="firstName" />
+
+  <div
+    class="error-message"
+    *ngIf="
+      userForm.get('firstName')?.invalid &&
+      (userForm.get('firstName')?.touched || userForm.get('firstName')?.dirty)
+    "
+  >
+    First name is required and should have a min. length of three letters.
+  </div>
+
+  <br />
+  <label for="lastName">Last name*: </label>
+  <input id="lastName" type="text" formControlName="lastName" />
+
+  <div
+    class="error-message"
+    *ngIf="
+      userForm.get('lastName')?.invalid &&
+      (userForm.get('lastName')?.touched || userForm.get('lastName')?.dirty)
+    "
+  >
+    Last name is required and should have a min. length of three letters.
+  </div>
+  <br />
+  <label for="email">Email*: </label>
+  <input id="email" type="text" formControlName="email" />
+
+  <div
+    class="error-message"
+    *ngIf="
+      userForm.get('email')?.invalid &&
+      (userForm.get('email')?.touched || userForm.get('email')?.dirty)
+    "
+  >
+    Email is required and should be a valid mail address.
+  </div>
+  <br />
+
+  <label for="birthDate">Birthday*: </label>
+
+  <input
+    type="date"
+    formControlName="birthDate"
+    pattern="\d{4}-\d{2}-\d{2}"
+    [value]="dateValue"
+    [max]="today"
+    [min]="minDate"
+  />
+
+  <div
+    class="error-message"
+    *ngIf="
+      userForm.get('birthDate')?.invalid &&
+      (userForm.get('birthDate')?.touched || userForm.get('birthDate')?.dirty)
+    "
+  >
+    Birthday is required and Birthday must be between {{minDate | date}} and {{today | date}}
+  </div>
+
+  <br />
+  <label for="gender">Gender*:</label>
+  <div *ngFor="let gender of genders; let i = index">
+    <label>
+      <input type="radio" [value]="gender" formControlName="gender" />
+      {{ gender | titlecase }}
+    </label>
+  </div>
+  <br />
+
+  <div class="form-buttons">
+    <button type="submit" [disabled]="userForm.invalid" class="button-gray">
+      Submit
+    </button>
+    <button type="reset" (click)="resetForm()" class="button-gray">
+      Reset
+    </button>
+  </div>
+</form>
+
+<app-overlay *ngIf="showSaveUserText">
+  {{ saveUserText }}
+</app-overlay>

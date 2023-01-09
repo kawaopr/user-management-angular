@@ -1,0 +1,53 @@
+.error-message {
+  color: var(--error);
+}
+
+input.ng-touched.ng-invalid {
+  border: 1px solid var(--error);
+}
+
+input.ng-touched.ng-valid {
+  border: 2px solid var(--success);
+}
+
+.error{
+  margin: 5% 15% 0 15%;
+  font-weight: 600;
+  color: var(--error);
+  font-size: 2rem;
+}
+
+.user-form {
+  margin: 1rem;
+  padding: 0.5rem;
+
+  @media (min-width: 1024px) {
+    margin: 0 15%;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  input {
+    padding: 0.5rem;
+    margin: 0.5rem 0 1rem 0;
+    width: 100%;
+
+  }
+
+  input[type="radio"] {
+    width: auto;
+    margin: 0;
+  }
+
+  .form-buttons {
+    display: flex;
+    justify-content: center;
+
+    button {
+      padding: 0.25rem 2rem;
+      margin: 1rem;
+    }
+  }
+}

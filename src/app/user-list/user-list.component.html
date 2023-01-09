@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="list">
+    <div *ngIf="users$ | async as users; else loadingOrError">
+      <button routerLink="/add/user" class="button-gray">Add new user</button>
+
+      <div *ngFor="let user of users" class="row">
+        <div
+          class="item"
+          [routerLink]="
+            isMobile ? '/users/' + user.id : './user-detail/' + user.id
+          "
+          [routerLinkActive]="'is-active'"
+        >
+          {{ user.firstName | uppercase }} {{ user.lastName | uppercase }}
+        </div>
+        <button (click)="deleteUser(user.id)" class="delete-button">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="content" *ngIf="!isMobile">
+    <router-outlet></router-outlet>
+  </div>
+
+  <ng-template #loadingOrError>
+    <ng-container *ngIf="errorObject; else loading">
+      <app-error-loading>
+        {{ errorObject }}
+      </app-error-loading>
+    </ng-container>
+    <ng-template #loading>
+      <app-loading></app-loading>
+    </ng-template>
+  </ng-template>
+
+  <app-overlay *ngIf="showDeletedText">
+    {{ deletedText }}
+  </app-overlay>
+</div>

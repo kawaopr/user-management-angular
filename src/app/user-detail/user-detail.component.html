@@ -1,0 +1,25 @@
+<button routerLink="/user-list" *ngIf="isMobile" class="back-button-mobile">Back to list</button>
+<div *ngIf="user$ | async as user; else loadingOrError" class="detail">
+  <h2>User: {{ user.firstName }} {{ user.lastName }}</h2>
+  <div class="person-card">
+    <p><strong>Firstname: </strong>{{ user.firstName }}</p>
+    <p><strong>Lastname: </strong>{{ user.lastName }}</p>
+    <p><strong>Email: </strong>{{ user.email }}</p>
+    <p><strong>Birthday: </strong>{{ user.birthDate | date }}</p>
+    <p><strong>Gender: </strong>{{ user.gender }}</p>
+  </div>
+  <button [routerLink]="'/edit/user/' + user.id" class="button-gray">
+    Edit
+  </button>
+</div>
+
+<ng-template #loadingOrError>
+  <ng-container *ngIf="errorObject; else loading">
+    <app-error-loading>
+      {{ errorObject }}
+    </app-error-loading>
+  </ng-container>
+  <ng-template #loading>
+    <app-loading></app-loading>
+  </ng-template>
+</ng-template>
